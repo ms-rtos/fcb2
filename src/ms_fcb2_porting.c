@@ -54,15 +54,15 @@ uint16_t get_be16(const void *buf)
  */
 os_error_t os_mutex_init(struct os_mutex *mu)
 {
-    os_error_t ret = OS_INVALID_PARM;
+    os_error_t err = OS_INVALID_PARM;
 
     if (mu != MS_NULL) {
         if (ms_mutex_create("fcb2_lock", MS_WAIT_TYPE_PRIO, &mu->id) == MS_ERR_NONE) {
-            ret = OS_OK;
+            err = OS_OK;
         }
     }
 
-    return ret;
+    return err;
 }
 
 /**
@@ -77,17 +77,17 @@ os_error_t os_mutex_init(struct os_mutex *mu)
  */
 os_error_t os_mutex_release(struct os_mutex *mu)
 {
-    os_error_t ret = OS_INVALID_PARM;
+    os_error_t err = OS_INVALID_PARM;
 
     if (mu != MS_NULL) {
         if (ms_mutex_unlock(mu->id) == MS_ERR_NONE) {
-            ret = OS_OK;
+            err = OS_OK;
         } else {
-            ret = OS_BAD_MUTEX;
+            err = OS_BAD_MUTEX;
         }
     }
 
-    return ret;
+    return err;
 }
 
 /**
@@ -106,17 +106,17 @@ os_error_t os_mutex_release(struct os_mutex *mu)
  */
 os_error_t os_mutex_pend(struct os_mutex *mu, os_time_t timeout)
 {
-    os_error_t ret = OS_INVALID_PARM;
+    os_error_t err = OS_INVALID_PARM;
 
     if (mu != MS_NULL) {
         if (ms_mutex_lock(mu->id, timeout) == MS_ERR_NONE) {
-            ret = OS_OK;
+            err = OS_OK;
         } else {
-            ret = OS_TIMEOUT;
+            err = OS_TIMEOUT;
         }
     }
 
-    return ret;
+    return err;
 }
 
 /*
